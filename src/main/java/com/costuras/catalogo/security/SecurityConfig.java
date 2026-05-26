@@ -22,10 +22,11 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(c->c.disable())
             .authorizeHttpRequests(a->a
-                .requestMatchers(HttpMethod.GET,"/catalogo/**").authenticated()
-                .requestMatchers(HttpMethod.POST,"/catalogo/**").hasAuthority("ADMIN")
-                .requestMatchers(HttpMethod.PUT,"/catalogo/**").hasAuthority("ADMIN")
-                .requestMatchers(HttpMethod.DELETE,"/catalogo/**").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.GET,"/catalogo/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/catalogo/**").permitAll()
+
+                .requestMatchers(HttpMethod.PUT,"/catalogo/**").permitAll()
+                .requestMatchers(HttpMethod.DELETE,"/catalogo/**").permitAll()
                 .anyRequest().authenticated())
             .sessionManagement(s->s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .addFilterBefore(new JwtAuthenticationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);

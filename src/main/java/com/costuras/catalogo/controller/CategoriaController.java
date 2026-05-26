@@ -19,13 +19,13 @@ public class CategoriaController {
 
     private final CatalogoService catalogoService;
 
-    /** GET /catalogo/categorias */
+    // GET /catalogo/categorias 
     @GetMapping
     public ResponseEntity<List<CategoriaResponse>> listar() {
         return ResponseEntity.ok(catalogoService.listarCategorias());
     }
 
-    /** POST /catalogo/categorias — solo ADMIN */
+    //POST /catalogo/categorias — solo ADMIN 
     @PostMapping
     public ResponseEntity<Map<String, Object>> crear(@Valid @RequestBody CategoriaRequest request) {
         CategoriaResponse categoria = catalogoService.crearCategoria(request);
@@ -33,7 +33,7 @@ public class CategoriaController {
                 .body(Map.of("mensaje", "Categoría creada correctamente", "categoria", categoria));
     }
 
-    /** PUT /catalogo/categorias/{id} — solo ADMIN */
+    // PUT /catalogo/categorias/{id} — solo ADMIN 
     @PutMapping("/{id}")
     public ResponseEntity<Map<String, Object>> editar(
             @PathVariable Integer id,
