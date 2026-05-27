@@ -19,9 +19,7 @@ public class ProductoController {
 
     private final CatalogoService catalogoService;
 
-    // ── Públicos (cualquier usuario autenticado) ───────────────────────────
-
-    //GET /catalogo/productos — lista todos los activos 
+   
     @GetMapping
     public ResponseEntity<List<ProductoResponse>> listar(
             @RequestParam(required = false) String buscar,
@@ -32,15 +30,13 @@ public class ProductoController {
         return ResponseEntity.ok(catalogoService.listarProductos());
     }
 
-    // GET /catalogo/productos/{id} — detalle de un producto 
+    
     @GetMapping("/{id}")
     public ResponseEntity<ProductoResponse> getProducto(@PathVariable Integer id) {
         return ResponseEntity.ok(catalogoService.getProducto(id));
     }
 
-    // Solo ADMIN 
-
-    //POST /catalogo/productos — crear producto 
+  
     @PostMapping
     public ResponseEntity<Map<String, Object>> crear(@Valid @RequestBody ProductoRequest request) {
         ProductoResponse producto = catalogoService.crearProducto(request);
@@ -48,8 +44,7 @@ public class ProductoController {
                 .body(Map.of("mensaje", "Producto creado correctamente", "producto", producto));
     }
 
-    // PUT /catalogo/productos/{id} — editar producto 
-    @PutMapping("/{id}")
+    
     public ResponseEntity<Map<String, Object>> editar(
             @PathVariable Integer id,
             @Valid @RequestBody ProductoRequest request
@@ -58,7 +53,7 @@ public class ProductoController {
         return ResponseEntity.ok(Map.of("mensaje", "Producto actualizado correctamente", "producto", producto));
     }
 
-    //DELETE /catalogo/productos/{id} — desactivar producto (soft delete) 
+    
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, String>> desactivar(@PathVariable Integer id) {
         catalogoService.desactivarProducto(id);

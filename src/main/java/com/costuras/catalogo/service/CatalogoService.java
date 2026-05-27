@@ -1,6 +1,10 @@
 package com.costuras.catalogo.service;
 
-import com.costuras.catalogo.dto.*;
+
+import com.costuras.catalogo.dto.CategoriaRequest;
+import com.costuras.catalogo.dto.CategoriaResponse;
+import com.costuras.catalogo.dto.ProductoRequest;
+import com.costuras.catalogo.dto.ProductoResponse;
 import com.costuras.catalogo.model.Categoria;
 import com.costuras.catalogo.model.Producto;
 import com.costuras.catalogo.repository.CategoriaRepository;
@@ -17,7 +21,7 @@ public class CatalogoService {
     private final ProductoRepository productoRepository;
     private final CategoriaRepository categoriaRepository;
 
-    // ── Productos públicos ─────────────────────────────────────────────────
+   
 
     public List<ProductoResponse> listarProductos() {
         return productoRepository.findByActivoTrue()
@@ -40,7 +44,7 @@ public class CatalogoService {
         return toProductoResponse(p);
     }
 
-    // ── Productos ADMIN ────────────────────────────────────────────────────
+  
 
     public ProductoResponse crearProducto(ProductoRequest request) {
         Categoria categoria = null;
@@ -87,7 +91,7 @@ public class CatalogoService {
         productoRepository.save(producto);
     }
 
-    // ── Categorías ADMIN ───────────────────────────────────────────────────
+  
 
     public List<CategoriaResponse> listarCategorias() {
         return categoriaRepository.findAll()
@@ -113,7 +117,7 @@ public class CatalogoService {
         return toCategoriaResponse(categoriaRepository.save(categoria));
     }
 
-    // ── Mappers ────────────────────────────────────────────────────────────
+    
 
     private ProductoResponse toProductoResponse(Producto p) {
         return ProductoResponse.builder()

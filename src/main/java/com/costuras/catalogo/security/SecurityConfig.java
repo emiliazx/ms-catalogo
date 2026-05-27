@@ -22,12 +22,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(c->c.disable())
             .authorizeHttpRequests(a->a
-                .requestMatchers(HttpMethod.GET,"/catalogo/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/catalogo/**").permitAll()
-
-                .requestMatchers(HttpMethod.PUT,"/catalogo/**").permitAll()
-                .requestMatchers(HttpMethod.DELETE,"/catalogo/**").permitAll()
-                .anyRequest().authenticated())
+                .requestMatchers(HttpMethod.GET, "/catalogo/**").permitAll()
+                
+                // POST, PUT y DELETE deberían requerir que el token sea válido y el usuario autenticado
+                .requestMatchers(HttpMethod.POST, "/catalogo/**").authenticated()
+                .requestMatchers(HttpMethod.PUT, "/catalogo/**").authenticated()
+                .requestMatchers(HttpMethod.DELETE, "/catalogo/**").authenticated()
+                .anyRequest().authenticated()
+            )
             .sessionManagement(s->s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .addFilterBefore(new JwtAuthenticationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
         return http.build();
